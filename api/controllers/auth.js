@@ -36,10 +36,11 @@ export const login = async (req, res, next) => {
         isAdmin: user.isAdmin,
       },
       process.env.JWT,
-      { expiresIn: "3d" }
+      {}
     );
 
     const { password, ...others } = user._doc;
+
     res.status(200).json({ ...others, accessToken });
   } catch (err) {
     console.log('err ------------->', err);

@@ -21,12 +21,13 @@ const Datatable = ({ columns }) => {
 
   //redux 
   const dispatch = useDispatch();
-  const kamars = useSelector((state) => state.kamar.kamars)
-
+  
   useEffect(() => {
     getKamars(dispatch);
   }, [dispatch])
-
+  
+  const kamars = useSelector((state) => state.kamar.kamars)
+  
   useEffect(() => {
     api.getCurrentQuote(base, symbol)
       .then(response => {
@@ -132,7 +133,6 @@ const Datatable = ({ columns }) => {
         columns={columns.concat(dateColumn, incomeColumn, profitColumn, actionColumn)}
         pageSize={9}
         rowsPerPageOptions={[9]}
-        checkboxSelection
         getRowId={(row) => row._id}
       />
     </div>

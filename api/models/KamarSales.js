@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { SchemaTypes } from "mongoose";
 
 const KamarSalesSchema = new mongoose.Schema(
   {
@@ -9,10 +9,16 @@ const KamarSalesSchema = new mongoose.Schema(
     keldi: {
       type: Number,
       default: 0,
+      min: 0,
     },
     ketdi: {
       type: Number,
       default: 0,
+      min: 0,
+    },
+    customerId: {
+      type: SchemaTypes.ObjectId,
+      ref: 'Customer',
     }
   },
   { timestamps: true }

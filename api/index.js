@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import authRoute from "./routes/auth.js";
 import usersRoute from "./routes/users.js";
 import kamarsRoute from "./routes/kamars.js";
+import customersRoute from "./routes/customers.js";
 import kamarSalesRoute from "./routes/kamarSales.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
@@ -34,6 +35,7 @@ const port = process.env.port || 8800;
 app.use("/api/auth", authRoute);
 app.use("/api/users", usersRoute);
 app.use("/api/kamars", kamarsRoute);
+app.use("/api/customers", customersRoute);
 app.use("/api/sales", kamarSalesRoute);
 
 app.use((err, req, res, next) => {
@@ -53,7 +55,7 @@ app.use((err, req, res, next) => {
 //   res.sendFile(path.join(__dirname, '/admin/build', 'index.html'));
 // });
 
-app.listen(process.env.PORT || 8800, () => {
+app.listen(port, () => {
   connect();
   console.log("Connected to backend.");
 });

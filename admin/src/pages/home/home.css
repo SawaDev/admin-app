@@ -1,3 +1,15 @@
-/* .linechart {
-  height: 240px;
+.lineChartX {
+  height: 260px;
+}
+
+/* @media screen and (min-width: 480px) {
+  .lineChartX {
+    height: 350px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .lineChartX {
+    height: 500px;
+  }
 } */

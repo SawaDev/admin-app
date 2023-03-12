@@ -55,6 +55,7 @@ const SingleKamar = () => {
       await userRequest.put(`/kamars/${id}`, newInfo);
       navigate(`/${path}`);
     } catch (err) {
+      alert("You are not allowed to do that!");
       console.log(err);
     }
   }
@@ -70,7 +71,8 @@ const SingleKamar = () => {
       await userRequest.put(`/kamars/${id}`, updatedKamar);
       navigate(`/${path}`);
     } catch (err) {
-      console.log(err)
+      alert("You are not allowed to do that!");
+      console.log(err);
     }
   }
 
@@ -144,7 +146,7 @@ const SingleKamar = () => {
   const { data, loading } = useFetch(`http://localhost:8800/api/kamars/find/${id}`);
 
   return (
-    <div className="flex w-full">
+    <div className="flex relative">
       <div className="flex-6">
         <div className="fixed bg-main-bg navbar w-full">
           <Navbar />
@@ -157,7 +159,7 @@ const SingleKamar = () => {
             <div className="grid sm:grid-cols-2 sm:grid-rows-1 w-full gap-8 px-3 mb-4 mt-20 md:mt-24">
               <div className="shadow-lg p-5 relative">
                 <div className="text-purple-600 font-bold absolute t-0 l-0 p-1 pr-4 bg-purple-200 rounded rounded-br-2xl ">Info</div>
-                <h1 className="text-center py-4 text-lg text-gray-600">Information</h1>
+                <h1 className="text-center py-4 text-lg text-gray-600">Info</h1>
                 <div className="flex flex-col gap-5 items-center text-center md:flex-row md:justify-around md:text-left">
                   <img
                     src={data.img}
@@ -199,7 +201,7 @@ const SingleKamar = () => {
                 <Chart2 id={id} startDate={startDate} endDate={endDate} />
               </div>
             </div>
-            <div className="grid px-5 gap-5 mb-10 lg:grid-cols-2">
+            <div className="grid px-5 gap-8 mb-10 lg:grid-cols-2">
               <div className="shadow-lg p-2 flex items-center">
                 <ul className="flex flex-wrap flex-row justify-center gap-5">
                   <li className="flex items-center px-1 mb-1">
@@ -239,7 +241,7 @@ const SingleKamar = () => {
               </div>
             </div>
 
-            <form className="px-4 flex flex-wrap gap-2.5 justify-between mb-10">
+            <form className="px-4 flex flex-wrap justify-between max-w-6xl mx-auto mb-10">
               {kamarInputs.map((input) => (
                 <div className="w-2/5" key={input.id}>
                   <label className="flex items-center gap-2.5 text-lg">{input.label}</label>
@@ -252,7 +254,6 @@ const SingleKamar = () => {
                   />
                 </div>
               ))}
-
               <button className="w-40 p-3 justify-start bg-teal-600 rounded text-white font-bold cursor-pointer" onClick={handleUpdate}>Update</button>
             </form>
             <div className="flex justify-between mb-3 px-5">

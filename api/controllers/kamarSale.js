@@ -1,14 +1,80 @@
 import KamarSales from "../models/KamarSales.js";
 import Kamar from "../models/Kamar.js";
+import Customer from "../models/Customer.js";
 
 //create sale
 export const createSale = async (req, res, next) => {
-  const newSale = new KamarSales(req.body);
-  const id = req.body.kamarId;
-
   try {
-    const savedSale = await newSale.save();
-    res.status(200).json(savedSale);
+    const { ketdi, kamarId, customerName } = req.body;
+
+    const customer = await Customer.findOne({ name: customerName })
+
+    if (!customer) {
+      const newCustomer = await Customer.create({
+        name: customerName.toLowerCase(),
+      });
+
+      const newSale = await KamarSales.create({
+        ketdi,
+        kamarId,
+        customerId: newCustomer._id
+      });
+
+      await Customer.findByIdAndUpdate(
+        { _id: newCustomer._id },
+        { $push: { sales: newSale._id } },
+        { new: true }
+      )
+
+      const currentKamar = await Kamar.findById({ _id: kamarId });
+      const currentSoni = currentKamar.soni;
+      const newSoni = currentSoni - ketdi;
+      if (newSoni < 0) {
+        throw new Error('In warehouse you have ' + currentSoni + ' ta kamar');
+      }
+      await Kamar.updateOne(
+        { _id: kamarId },
+        {
+          $set: {
+            soni: newSoni
+          }
+        }
+      )
+
+      const savedSale = await newSale.save();
+      res.status(200).json(savedSale);
+    } else {
+      const newSale = new KamarSales({
+        ketdi,
+        kamarId,
+        customerId: customer._id
+      });
+
+      await Customer.findByIdAndUpdate(
+        { _id: customer._id },
+        { $push: { sales: newSale._id } },
+        { new: true }
+      )
+
+      const currentKamar = await Kamar.findById({ _id: kamarId });
+      const currentSoni = currentKamar.soni;
+      const newSoni = currentSoni - ketdi;
+      if (newSoni < 0) {
+        throw new Error('In warehouse you have ' + currentSoni + ' ta kamar');
+      }
+      await Kamar.updateOne(
+        { _id: kamarId },
+        {
+          $set: {
+            soni: newSoni
+          }
+        }
+      )
+
+      const savedSale = await newSale.save();
+
+      res.status(200).json(savedSale);
+    }
   } catch (err) {
     next(err);
   }
@@ -57,7 +123,7 @@ export const dailySales = async (req, res, next) => {
         }
       },
       {
-        $sort: {_id: 1}
+        $sort: { _id: 1 }
       }
     ]);
     !sales && res.status(404).json("No sales");

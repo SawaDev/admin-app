@@ -1,16 +1,16 @@
 import express from 'express';
 import { createKamar, updateKamar, deleteKamar, getKamar, getKamars, getWarehouse, getIncome, getPie, getMonthlyStats, test } from '../controllers/kamar.js';
-import { verifyAdmin, verifyUser } from '../utils/verifyToken.js';
+import { verifyToken } from '../utils/verifyToken.js';
 const router = express.Router();
 
 //CREATE
-router.post("/", verifyAdmin, createKamar);
+router.post("/", verifyToken, createKamar);
 
 //UPDATE
-router.put("/:id", verifyAdmin, updateKamar);
+router.put("/:id", verifyToken, updateKamar);
 
 //DELETE
-router.delete("/:id", verifyAdmin, deleteKamar);
+router.delete("/:id", verifyToken, deleteKamar);
 
 //GET
 router.get("/find/:id", getKamar);

@@ -9,9 +9,20 @@ import PsychologyOutlinedIcon from "@mui/icons-material/PsychologyOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import Inventory2Icon from '@mui/icons-material/Inventory2';
 import CloseIcon from '@mui/icons-material/Close';
+import PersonIcon from '@mui/icons-material/Person';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux"
+import { logout } from "../../redux/userRedux";
 
 const Sidebar = ({ setToggleMenu, toggleMenu }) => {
+  const dispatch = useDispatch();
+
+  const handleLogout = async (e) => {
+    e.preventDefault();
+    dispatch(logout());
+  }
+
   const handleClick = (e) => {
     e.preventDefault();
     localStorage.clear();
@@ -47,6 +58,14 @@ const Sidebar = ({ setToggleMenu, toggleMenu }) => {
                   <span className="text-xl text-purple-500">Dashboard</span>
                 </li>
               </Link>
+              <Link to="/newsale">
+                <li className={linkClass}>
+                  <div>
+                    <AttachMoneyIcon className="text-xl text-purple-500" />
+                  </div>
+                  <span className="text-xl text-purple-500">New Sale</span>
+                </li>
+              </Link>
               <p className="text-gray-400 m-2 mt-3 uppercase">LISTS</p>
               <Link to="/kamars" >
                 <li className={linkClass} onClick={() => setToggleMenu(toggleMenu)}>
@@ -56,12 +75,12 @@ const Sidebar = ({ setToggleMenu, toggleMenu }) => {
                   <span className="text-xl text-purple-500 mb-2 cursor-pointer">Kamarlar</span>
                 </li>
               </Link>
-              <Link to="/calculator" >
-                <li className={linkClass}>
+              <Link to="/customers" >
+                <li className={linkClass} onClick={() => setToggleMenu(toggleMenu)}>
                   <div>
-                    <CalculateIcon className="text-xl text-purple-500" />
+                    <PersonIcon className="text-xl text-purple-500" />
                   </div>
-                  <span className="text-xl text-purple-500 mb-2 cursor-pointer">Calculator</span>
+                  <span className="text-xl text-purple-500 mb-2 cursor-pointer">Klientlar</span>
                 </li>
               </Link>
               <p className="text-gray-400 m-2 mt-3 uppercase">USEFUL</p>
@@ -71,6 +90,14 @@ const Sidebar = ({ setToggleMenu, toggleMenu }) => {
                     <InsertChartIcon className="text-xl text-purple-500" />
                   </div>
                   <span className="text-xl text-purple-500 mb-2 cursor-pointer">Stats</span>
+                </li>
+              </Link>
+              <Link to="/calculator" >
+                <li className={linkClass}>
+                  <div>
+                    <CalculateIcon className="text-xl text-purple-500" />
+                  </div>
+                  <span className="text-xl text-purple-500 mb-2 cursor-pointer">Calculator</span>
                 </li>
               </Link>
               <li className={linkClass}>
@@ -105,7 +132,7 @@ const Sidebar = ({ setToggleMenu, toggleMenu }) => {
                 </div>
                 <span className="text-xl text-purple-500 mb-2 cursor-pointer">Profile</span>
               </li>
-              <li o className={linkClass} onClick={handleClick}>
+              <li className={linkClass} onClick={handleLogout}>
                 <div>
                   <ExitToAppIcon className="text-xl text-purple-500" />
                 </div>

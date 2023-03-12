@@ -21,6 +21,7 @@ const KamarSchema = new mongoose.Schema(
         soni: {
             type: Number,
             required: true,
+            min: 0,
         },
         price: {
             type: Number,

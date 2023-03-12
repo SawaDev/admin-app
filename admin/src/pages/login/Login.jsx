@@ -1,4 +1,3 @@
-import axios from "axios";
 import { userRequest } from "../../requestMethods";
 import { useState } from "react";
 import { useDispatch } from 'react-redux';
@@ -41,14 +40,14 @@ const Login = () => {
           placeholder="username"
           id="username"
           onChange={(e) => setUsername(e.target.value)}
-          className="lInput"
+          className="lInput border-2 py-5 px-4 text-lg rounded-lg outline-none"
         />
         <input
           type="password"
           placeholder="password"
           id="password"
           onChange={(e) => setPassword(e.target.value)}
-          className="lInput"
+          className="lInput border-2 py-5 px-4 text-lg rounded-lg outline-none"
         />
         <button onClick={handleClick} className="lButton">
           Login

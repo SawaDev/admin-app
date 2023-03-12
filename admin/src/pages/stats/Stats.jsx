@@ -4,6 +4,7 @@ import Navbar from '../../components/navbar/Navbar'
 import PieChart from '../../components/pieChart/PieChart'
 import { publicRequest } from '../../requestMethods'
 import "./stats.css"
+
 const Stats = () => {
   const [filter, setFilter] = useState("money");
   const [monthly, setMonthly] = useState([]);
@@ -54,7 +55,7 @@ const Stats = () => {
     }
     getSales();
   }, [filter])
-console.log(filter)
+
   return (
     <div className="flex flex-col mb-10">
       <div className="bg-main-bg navbar w-full">
@@ -80,7 +81,7 @@ console.log(filter)
           </div>
         </div>
         <div className="lineChart w-full">
-          <LineChart2 data={monthly}/>
+          <LineChart2 data={monthly} />
         </div>
       </div>
     </div>

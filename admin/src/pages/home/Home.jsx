@@ -6,6 +6,7 @@ import Chart from "../../components/chart/Chart";
 import Table from "../../components/table/Table";
 import { useEffect, useState } from 'react'
 import { userRequest, publicRequest } from "../../requestMethods";
+import Rates from "../../components/lineChartCurrency/Rates";
 
 const Home = () => {
   const [data, setData] = useState('');
@@ -83,14 +84,12 @@ const Home = () => {
   }, [])
   const listClass = "flex flex-col items-start pr-1 pl-1 mb-1"
   return (
-    <div className="flex relative ">
-
+    <div className="flex relative">
       <div className="bg-main-bg min-h-screen w-full">
-        <div className="fixed md:static bg-main-bg navbar w-full">
+        <div className="fixed z-1 bg-main-bg navbar w-full">
           <Navbar />
         </div>
-
-        <div className="grid sm:grid-cols-2 xl:grid-cols-4 gap-1 mt-20 md:mt-0">
+        <div className="grid sm:grid-cols-2 xl:grid-cols-4 gap-1 mt-20">
           <div>
             <Widget type="warehouse" stats={stats} />
           </div>
@@ -107,7 +106,9 @@ const Home = () => {
 
         <div className="">
           <div className="flex flex-col gap-10 p-6">
-            <Chart data={data} symbol={symbol} />
+            <div className='w-full p-3 z-0 md:p-5' style={{ height: 340, zIndex: 0 }}>
+              <Rates data={data} symbol={symbol} />
+            </div>
             <ul className="grid grid-cols-2 w-full">
               <li className="flex flex-col items-start  pr-1 pl-1 mb-2">
                 <label htmlFor="start-date" className="mr-3 w-30">Initial Date</label>

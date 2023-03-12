@@ -1,6 +1,5 @@
 import { useState } from "react"
 import Navbar from "../../components/navbar/Navbar"
-import Sidebar from "../../components/sidebar/Sidebar"
 import "./calculator.scss"
 
 function Calculator() {
@@ -17,7 +16,6 @@ function Calculator() {
 
   return (
     <div>
-      {/* <Sidebar /> */}
       <div>
         <Navbar />
         <div className="flex h-full justify-center p-5 items-center">
@@ -28,7 +26,7 @@ function Calculator() {
                 <label className="text-lg mb-2"> Price: </label>
                 <input
                   placeholder={price}
-                  onChange={e => setPrice(+e.target.value)}
+                  onChange={e => setPrice(e.target.value)}
                   type="number"
                   className="p-2 bg-gray-100 w-full"
                 />
@@ -37,7 +35,7 @@ function Calculator() {
                 <label className="text-lg mb-2"> In dollar </label>
                 <input
                   placeholder={price_in_dollar}
-                  onChange={e => setPrice_in_dollar(+e.target.value)}
+                  onChange={e => setPrice_in_dollar(e.target.value)}
                   type="number"
                   min="0" step="any"
                   className="p-2 bg-gray-100 w-full"
@@ -47,7 +45,7 @@ function Calculator() {
                 <label className="text-lg mb-2"> Dollar Kursi</label>
                 <input
                   placeholder={dollar_kurs}
-                  onChange={e => setDollar_kurs(+e.target.value)}
+                  onChange={e => setDollar_kurs(e.target.value)}
                   type="number"
                   className="p-2 bg-gray-100 w-full"
                 />
@@ -56,7 +54,7 @@ function Calculator() {
                 <label className="text-lg mb-2"> Soni: </label>
                 <input
                   placeholder={soni}
-                  onChange={e => setSoni(+e.target.value)}
+                  onChange={e => setSoni(e.target.value)}
                   type="number"
                   className="p-2 bg-gray-100 w-full"
                 />

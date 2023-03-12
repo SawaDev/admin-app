@@ -1,42 +1,24 @@
 import Kamar from "../models/Kamar.js";
 import KamarSales from "../models/KamarSales.js";
 import mongoose from "mongoose";
-import { request } from "express";
 
 export const createKamar = async (req, res, next) => {
-    const newKamar = new Kamar(req.body);
-    const allKamars = await Kamar.find();
+    try {
+        const newKamar = new Kamar(req.body);
+        const allKamars = await Kamar.find();
 
-    const result = allKamars.map((k) => {
-        if (k.category === req.body.category && k.color === req.body.color && k.size === req.body.size && k.temir === req.body.temir) {
-            return true;
-        } else {
-            return false;
-        }
-    })
+        const exists = allKamars.some(k => k.category === req.body.category && k.color === req.body.color && k.size === req.body.size && k.temir === req.body.temir);
 
-    function contains(a, obj) {
-        for (var i = 0; i < a.length; i++) {
-            if (a[i] === obj) {
-                return true;
-            }
+        if (exists) {
+            return res.status(400).send({ error: "This type already exists!" });
         }
-        return false;
+
+        const savedKamar = await newKamar.save();
+        res.status(200).json(savedKamar);
+    } catch (err) {
+        next(err);
     }
-
-    if (contains(result, true)) {
-        res.status(400).json("This type already exists!");
-    } else {
-        try {
-            const savedKamar = await newKamar.save();
-            res.status(200).json(savedKamar);
-        } catch (err) {
-            next(err);
-        }
-    }
-
 };
-
 
 export const updateKamar = async (req, res, next) => {
     try {
@@ -71,12 +53,8 @@ export const getKamar = async (req, res, next) => {
 };
 
 export const getKamars = async (req, res, next) => {
-    const { min, max, ...others } = req.query;
     try {
-        const kamars = await Kamar.find({
-            ...others,
-            cheapestPrice: { $gt: min | 1, $lt: max || 999 },
-        }).limit(req.query.limit);
+        const kamars = await Kamar.find();
         res.status(200).json(kamars);
     } catch (err) {
         next(err);
@@ -176,19 +154,53 @@ export const getPie = async (req, res, next) => {
 };
 
 export const test = async (req, res, next) => {
-    try{
-        const data = await KamarSales.aggregate([
-            {
-                $lookup: {
-                    from: "Kamar",
-                    localField: "kamarId",
-                    foreignField: "_id",
-                    as: "details",
-                }
-            }
-        ])
-        res.status(200).json(data);
-    }catch(err){
+    try {
+        // const kamarTemp = [
+        //     {
+        //         keldi: 300,
+        //         ketdi: 200,
+        //         kamarId: "63da189952948df7efe94969"
+        //     },
+        //     {
+        //         keldi: 1000,
+        //         ketdi: 3000,
+        //         kamarId: "63da189952948df7efe94969"
+        //     },
+        //     {
+        //         keldi: 0,
+        //         ketdi: 2000,
+        //         kamarId: "63da189952948df7efe94969"
+        //     },
+        //     {
+        //         keldi: 500,
+        //         ketdi: 900,
+        //         kamarId: "63da189952948df7efe94969"
+        //     },
+        //     {
+        //         keldi: 1200,
+        //         ketdi: 800,
+        //         kamarId: "63da189952948df7efe94969"
+        //     },
+        //     {
+        //         keldi: 4000,
+        //         ketdi: 0,
+        //         kamarId: "63da189952948df7efe94969"
+        //     },
+        // ]
+
+        // KamarSales.create(kamarTemp, (error, documents) => {
+        //     if (error) {
+        //         console.error(error);
+        //     } else {
+        //         console.log('Users saved successfully: ', documents);
+        //     }
+        //     mongoose.connection.close();
+        // });
+
+        // const kamar = new Kamar(kamarTemp)
+        // await kamar.save()
+        // res.status(200).json(kamar);
+    } catch (err) {
         next(err);
     }
 };
@@ -201,7 +213,7 @@ export const getMonthlyStats = async (req, res, next) => {
     const kamar = await Kamar.findById(id);
     const kamars = await Kamar.find();
 
-    if ( filterBy === "money" ) {
+    if (filterBy === "money") {
         try {
             const data = await KamarSales.aggregate([
                 {
@@ -239,7 +251,7 @@ export const getMonthlyStats = async (req, res, next) => {
         } catch (err) {
             next(err);
         }
-    } else if( filterBy === "number" ){
+    } else if (filterBy === "number") {
         try {
             const data = await KamarSales.aggregate([
                 {

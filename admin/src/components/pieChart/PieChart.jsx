@@ -52,7 +52,7 @@ const PieChart = ({ filter }) => {
   return (
     <div className="bg-white rounded-xl shadow-xl p-3">
       <div>
-        <p className="text-lg mb-3 capitalize">Analytics Of Sales By {filter}</p>
+        <p className="text-lg mb-3 capitalize">Analytics Of Warehouse By {filter}</p>
         <select className="mb-2 shadow-md" onChange={handleChange}>
           <option>Money</option>
           <option>Soni</option>
