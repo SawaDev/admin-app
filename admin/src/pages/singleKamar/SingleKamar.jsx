@@ -143,7 +143,7 @@ const SingleKamar = () => {
     getSales();
   }, [id, filter])
 
-  const { data, loading } = useFetch(`http://localhost:8800/api/kamars/find/${id}`);
+  const { data, loading } = useFetch(`https://admin-app-jxk8.onrender.com/api/kamars/find/${id}`);
 
   return (
     <div className="flex relative">
