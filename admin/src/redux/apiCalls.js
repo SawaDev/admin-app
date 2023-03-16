@@ -126,7 +126,7 @@ export const getSales = async (dispatch) => {
 export const addSale = async (sale, dispatch) => {
   dispatch(addSaleStart());
   try {
-    const res = await userRequest.post("/sales", sale);
+    const res = await userRequest.post("/sales/newCollection", sale);
     dispatch(addSaleSuccess(res.data));
   } catch (err) {
     dispatch(addSaleFailure());

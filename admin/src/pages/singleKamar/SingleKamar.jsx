@@ -21,7 +21,8 @@ const SingleKamar = () => {
   const [filter, setFilter] = useState("money");
   const [sale, setSale] = useState({
     "keldi": 0,
-    "ketdi": 0
+    "ketdi": 0,
+    "kamarId": id
   });
 
   const navigate = useNavigate();
@@ -47,15 +48,15 @@ const SingleKamar = () => {
         ...sale,
       };
 
-      const newInfo = {
-        soni: data.soni + (sale.keldi - sale.ketdi),
-      }
+      // const newInfo = {
+      //   soni: data.soni + (sale.keldi - sale.ketdi),
+      // }
 
       addSale(newSale, dispatch);
-      await userRequest.put(`/kamars/${id}`, newInfo);
+      // await userRequest.put(`/kamars/${id}`, newInfo);
       navigate(`/${path}`);
     } catch (err) {
-      alert("You are not allowed to do that!");
+      alert("Somthing wrong happened, when posting a sale!");
       console.log(err);
     }
   }
@@ -147,7 +148,7 @@ const SingleKamar = () => {
 
   return (
     <div className="flex relative">
-      <div className="flex-6">
+      <div className="w-full">
         <div className="fixed bg-main-bg navbar w-full">
           <Navbar />
         </div>
@@ -156,7 +157,7 @@ const SingleKamar = () => {
           "loading"
         ) : (
           <>
-            <div className="grid sm:grid-cols-2 sm:grid-rows-1 w-full gap-8 px-3 mb-4 mt-20 md:mt-24">
+            <div className="grid lg:grid-cols-2 grid-rows-2 lg:grid-rows-1 h-fit w-full gap-8 px-3 mb-4 mt-20 md:mt-24">
               <div className="shadow-lg p-5 relative">
                 <div className="text-purple-600 font-bold absolute t-0 l-0 p-1 pr-4 bg-purple-200 rounded rounded-br-2xl ">Info</div>
                 <h1 className="text-center py-4 text-lg text-gray-600">Info</h1>
@@ -197,13 +198,13 @@ const SingleKamar = () => {
                   </div>
                 </div>
               </div>
-              <div className="h-60 shadow-lg mb-10 w-full">
+              <div className="shadow-lg  w-full">
                 <Chart2 id={id} startDate={startDate} endDate={endDate} />
               </div>
             </div>
             <div className="grid px-5 gap-8 mb-10 lg:grid-cols-2">
               <div className="shadow-lg p-2 flex items-center">
-                <ul className="flex flex-wrap flex-row justify-center gap-5">
+                <ul className="flex flex-wrap flex-row w-full justify-around gap-5">
                   <li className="flex items-center px-1 mb-1">
                     <label htmlFor="start-date" className="w-25 mr-3">Initial Date</label>
                     <input type="date" name="start-date" className="bg-gray-100 p-2 rounded" value={startDate} onChange={event => setStartDate(event.target.value)} />
@@ -215,7 +216,7 @@ const SingleKamar = () => {
                 </ul>
               </div>
               <div className="shadow-lg p-5">
-                <form className="flex flex-wrap flex-row justify-center gap-5">
+                <form className="flex flex-wrap flex-row justify-around gap-5">
                   <div className="flex items-center px-1 mb-1">
                     <label className="mr-3">Keldi: </label>
                     <input
@@ -226,7 +227,7 @@ const SingleKamar = () => {
                       className="bg-gray-100 p-3 rounded"
                     />
                   </div>
-                  <div className="flex items-center px-1 mb-1">
+                  {/* <div className="flex items-center px-1 mb-1">
                     <label className="mr-3">Ketdi: </label>
                     <input
                       id="ketdi"
@@ -235,7 +236,7 @@ const SingleKamar = () => {
                       placeholder="Sotildi"
                       className="bg-gray-100 p-3 rounded"
                     />
-                  </div>
+                  </div> */}
                   <button className="w-40 p-3 bg-teal-600 rounded text-white font-bold cursor-pointer" onClick={handleClick}>Update</button>
                 </form>
               </div>
@@ -254,7 +255,7 @@ const SingleKamar = () => {
                   />
                 </div>
               ))}
-              <button className="w-40 p-3 justify-start bg-teal-600 rounded text-white font-bold cursor-pointer" onClick={handleUpdate}>Update</button>
+              <button className="w-40 h-fit text-center my-auto p-3 justify-start bg-teal-600 rounded text-white font-bold cursor-pointer" onClick={handleUpdate}>Update</button>
             </form>
             <div className="flex justify-between mb-3 px-5">
               <p className="text-2xl md:text-3xl">Monthly Analytic</p>

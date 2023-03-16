@@ -8,6 +8,7 @@ const NewSale = () => {
   const [kamars, setKamars] = useState([]);
   const [kamarId, setKamarId] = useState("");
   const [sale, setSale] = useState({});
+  const [isPosted, setIsPosted] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -31,15 +32,17 @@ const NewSale = () => {
       kamarId,
       [e.target.name]: value,
     });
-    console.log(sale)
   };
 
   const handleClick = async (e) => {
-    try {
-      await userRequest.post('/sales', sale);
-      navigate('/customers');
-    } catch (err) {
-      alert(err.message);
+    if (!isPosted) {
+      try {
+        setIsPosted(true);
+        await userRequest.post('/sales', sale);
+        navigate('/customers');
+      } catch (err) {
+        alert(err.message);
+      }
     }
 
   }
@@ -102,7 +105,7 @@ const NewSale = () => {
               className="p-3 bg-gray-100 rounded-lg min-w-[320px] "
             />
           </div>
-          <button onClick={handleClick} type="button" className="w-40 mt-8 p-3 justify-start bg-teal-600 rounded text-white font-bold cursor-pointer">Add Sale</button>
+          <button onClick={handleClick} type="button" disabled={isPosted} className="w-40 mt-8 p-3 justify-start bg-teal-600 rounded text-white font-bold cursor-pointer">{isPosted ? "Loading" : "Add Sale"}</button>
         </div>
       </div>
     </div>

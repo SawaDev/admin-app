@@ -16,9 +16,9 @@ const Login = () => {
       dispatch(loginSuccess(res.data));
       return res.data;
     }).catch(err => {
-      setError(err.response.data.message);
+      setError(err?.response?.data?.message);
       dispatch(loginFailure());
-      return err.response.data;
+      return err?.response?.data;
     })
   }
 

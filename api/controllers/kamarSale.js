@@ -80,6 +80,37 @@ export const createSale = async (req, res, next) => {
   }
 }
 
+export const newCollection = async (req, res, next) => {
+  try {
+    const { keldi, kamarId } = req.body;
+    const newSale = new KamarSales({
+      keldi,
+      kamarId,
+    });
+
+    const currentKamar = await Kamar.findById({ _id: kamarId });
+    const currentSoni = currentKamar.soni;
+    const newSoni = currentSoni + keldi;
+    if (newSoni < 0) {
+      throw new Error('In warehouse you have ' + currentSoni + ' ta kamar');
+    }
+
+    await Kamar.updateOne(
+      { _id: kamarId },
+      {
+        $set: {
+          soni: newSoni
+        }
+      }
+    )
+
+    const savedSale = await newSale.save();
+    res.status(200).json(savedSale);
+  } catch (err) {
+    next(err);
+  }
+}
+
 //get sales by id
 export const getSales = async (req, res, next) => {
   const id = req.params.id;
