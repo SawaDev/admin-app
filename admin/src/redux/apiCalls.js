@@ -1,5 +1,5 @@
-import { loginFailure, loginStart, loginSuccess} from "./userRedux";
-import { publicRequest, userRequest } from "../requestMethods";
+import { loginFailure, loginStart, loginSuccess } from "./userRedux";
+import { publicRequest, testRequest, userRequest } from "../requestMethods";
 import {
   getKamarFailure,
   getKamarStart,
@@ -75,10 +75,10 @@ export const getKamars = async (dispatch) => {
 
 export const getKamar = async (dispatch, id) => {
   dispatch(getKamarStart());
-  try{
+  try {
     const res = await publicRequest.get(`/kamars/find/${id}`);
     dispatch(getKamarSuccess(res.data));
-  }catch(err){
+  } catch (err) {
     dispatch(getKamarFailure());
   }
 }

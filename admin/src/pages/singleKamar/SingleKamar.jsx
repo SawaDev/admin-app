@@ -21,14 +21,14 @@ const SingleKamar = () => {
   const [filter, setFilter] = useState("money");
   const [sale, setSale] = useState({
     "keldi": 0,
-    "ketdi": 0,
-    "kamarId": id
+    "ketdi": 0
   });
 
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setSale((prev) => ({ ...prev, kamarId: id, [e.target.id]: e.target.value }));
+    setSale((prev) => ({ ...prev, kamarId: id, [e.target.id]: parseInt(e.target.value) }));
+    console.log(sale);
   };
 
   const handleChangeUpdate = (e) => {
