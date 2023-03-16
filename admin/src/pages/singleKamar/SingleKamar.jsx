@@ -3,8 +3,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
 import { useEffect, useMemo, useState } from "react";
 import Chart2 from "../../components/chart2/Chart2";
-import { addSale } from "../../redux/apiCalls";
-import { useDispatch } from "react-redux";
 import { kamarInputs } from "../../formSource";
 import { publicRequest, userRequest } from "../../requestMethods";
 import LineChart2 from "../../components/lineChart/LineChart";
@@ -15,7 +13,6 @@ const SingleKamar = () => {
   const path = location.pathname.split("/")[1];
   const [startDate, setStartDate] = useState('')
   const [endDate, setEndDate] = useState('')
-  const dispatch = useDispatch();
   const [kamarUp, setKamarUp] = useState({})
   const [monthly, setMonthly] = useState([]);
   const [filter, setFilter] = useState("money");
@@ -48,12 +45,7 @@ const SingleKamar = () => {
         ...sale,
       };
 
-      // const newInfo = {
-      //   soni: data.soni + (sale.keldi - sale.ketdi),
-      // }
-
-      addSale(newSale, dispatch);
-      // await userRequest.put(`/kamars/${id}`, newInfo);
+      await userRequest.post('/sales/newCollection', newSale)
       navigate(`/${path}`);
     } catch (err) {
       alert("Somthing wrong happened, when posting a sale!");

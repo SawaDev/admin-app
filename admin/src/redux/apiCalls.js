@@ -1,5 +1,5 @@
 import { loginFailure, loginStart, loginSuccess } from "./userRedux";
-import { publicRequest, testRequest, userRequest } from "../requestMethods";
+import { publicRequest, userRequest } from "../requestMethods";
 import {
   getKamarFailure,
   getKamarStart,

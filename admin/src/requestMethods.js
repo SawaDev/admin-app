@@ -15,8 +15,3 @@ export const userRequest = axios.create({
   // withCredentials: true,
   headers: { token: `Bearer ${TOKEN}` },
 });
-
-export const testRequest = axios.create({
-  baseURL: 'http://localhost:8800/api/',
-  headers: { token: `Bearer ${TOKEN}` },
-})
